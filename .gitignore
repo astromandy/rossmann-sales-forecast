@@ -1,0 +1,33 @@
+# Ignore Jupyter notebook checkpoints
+**/.ipynb_checkpoints
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*.so
+
+# VS Code settings
+.vscode/
+
+# Virtual environments
+.env
+.venv/
+env/
+venv/
+*.env
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Trained models
+models/*.pkl
+
+# Prediction outputs
+data/predictions/*.csv
+data/predictions/*.png
+
+# Temporary or log files
+*.log
+*.tmp
+
