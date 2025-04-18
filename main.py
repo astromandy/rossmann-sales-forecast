@@ -8,14 +8,16 @@ import joblib
 from sklearn.model_selection import TimeSeriesSplit, RandomizedSearchCV
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 import xgboost as xgb
+import sqlite3
 import sys
-
 
 # Add project root to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname('~/rossmann-sales-forecast/src/'), '..')))
 
 from src.etl import carregar_dados, limpar_dados
 from src.features import criar_variaveis_temporais, criar_lags, criar_medias_moveis
+from src.db.create_db import fetch_query_results
+from src.db._sql_queries import avg_sales_per_store
 
 # ====================
 # Paths
@@ -24,6 +26,15 @@ train_path = "~/rossmann-sales-forecast/data/raw/train.csv"
 store_path = "~/rossmann-sales-forecast/data/raw/store.csv"
 model_path = "/home/amanda/rossmann-sales-forecast/models/xgb_model.pkl"
 fig_path = "/home/amanda/rossmann-sales-forecast/models/evaluation_plot.png"
+
+# ====================
+# Connect to the database and fetch results
+# ====================
+query = avg_sales_per_store()  # Using the query defined in _sql_queries.py
+results = fetch_query_results(query)
+print("Average sales per store:")
+for row in results:
+    print(f"Store {row[0]} - Avg Sales: {row[1]}")
 
 # ====================
 # Load and preprocess data
